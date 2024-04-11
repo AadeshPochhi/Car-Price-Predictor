@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car Price Prediction</title>
+  <!-- Using the hosted FontAwesome CSS file from a CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='webstyle.css') }}">
+
+</head>
+
+<body>
+  <nav>
+    <logo>PriceSavvyAuto</logo>
+    <ul>
+      <li>Home</li>
+      <li>Contact</li>
+    </ul>
+  </nav>
+  <section class="intro-section">
+    <div class="product-info">
+      <h1>Predict Car Prices in Seconds</h1>
+      <p>Get an accurate prediction of the price for any car based on the information you provide. Simply select the
+        car's company, model, year bought, kilometers driven, fuel type, transmission, mileage, engine, and power.</p>
+      <button onclick="openModal()">Get an accurate car price prediction now</button>
+    </div>
+  </section>
+
+  <!-- Modal HTML -->
+  <div id="myModal" class="modal">
+    <h2>Enter Car Details</h2>
+    <!-- Add your input fields here -->
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Enter car name" required>
+
+    <label for="year">Year:</label>
+    <input type="number" id="year" name="year" placeholder="Enter car year" required>
+
+    <label for="kilometers">Kilometers Driven:</label>
+    <input type="number" id="kilometers" name="kilometers" placeholder="Enter kilometers driven" required>
+
+    <label for="fuelType">Fuel Type:</label>
+    <select id="fuelType" name="fuelType" required>
+      <option value="CNG">CNG</option>
+      <option value="Diesel">Diesel</option>
+      <option value="Petrol">Petrol</option>
+      <!-- Add more fuel types if needed -->
+    </select>
+
+    <label for="transmission">Transmission:</label>
+    <select id="transmission" name="transmission" required>
+      <option value="Manual">Manual</option>
+      <option value="Automatic">Automatic</option>
+      <!-- Add more transmission types if needed -->
+    </select>
+
+    <label for="ownerType">Owner Type:</label>
+    <select id="ownerType" name="ownerType" required>
+      <option value="First">First</option>
+      <option value="Second">Second</option>
+      <option value="Third">Third</option>
+      <option value="Fourth & Above">Fourth & Above</option>
+      <!-- Add more owner types if needed -->
+    </select>
+
+    <label for="mileage">Mileage:</label>
+    <input type="number" step="0.1" id="mileage" name="mileage" placeholder="Enter car mileage" required>
+
+    <label for="engineSize">Engine Size:</label>
+    <input type="number" step="0.1" id="engineSize" name="engineSize" placeholder="Enter engine size" required>
+
+    <label for="horsepower">Horsepower:</label>
+    <input type="number" id="horsepower" name="horsepower" placeholder="Enter horsepower" required>
+
+    <label for="seats">Seats:</label>
+    <input type="number" id="seats" name="seats" placeholder="Enter number of seats" required>
+
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" placeholder="Enter car age" required>
+      
+    <label for="price">Price:</label>
+    <loader class="hide">
+    <img src="{{ url_for('static', filename='loading.gif') }}" alt="" width="80px">
+    </loader>
+    <content>
+      <input type="text" id="price" name="price" disabled>
+    </content>
+
+    <button onclick="predictCarPrice()">Predict</button>
+    <button onclick="closeModal()">Close</button>
+  </div>
+
+
+  <!-- Overlay div -->
+  <div id="overlay" class="overlay"></div>
+
+  <section class="team-info">
+    <h1>Our Team</h1>
+    <div>
+      <photo><img src="{{ url_for('static', filename='aadesh.jpg') }}" alt=""></photo>
+      <member>Aadesh Pochhi</member>
+      <facebook></facebook>
+      <insta></insta>
+      <twitter></twitter>
+    </div>
+    <div>
+      <photo><img src="{{ url_for('static', filename='ganesh.png') }}" alt=""></photo>
+      <member>Ganesh Mundkar</member>
+      <facebook></facebook>
+      <insta></insta>
+      <twitter></twitter>
+    </div>
+    <div>
+      <photo><img src="{{ url_for('static', filename='pritesh.jpg') }}" alt=""></photo>
+      <member>Pritesh Lohot</member>
+      <facebook></facebook>
+      <insta></insta>
+      <twitter></twitter>
+    </div>
+  </section>
+
+  <section class="client-testimonials">
+    <h1>Client Testimonials</h1>
+    <photo></photo>
+    <p>The car price prediction service provided by this website is extremely accurate and has helped me make informed
+      decisions. Highly recommended! </p>
+    <photo><img src="{{ url_for('static', filename='prakhar.jpg') }}" alt=""></photo>
+    <h3>Prakhar Shrivastav</h3>
+  </section>
+
+  <section class="contact-section">
+    <div class="contact-info">
+      <h1>Contact Us Today for a Car Price Prediction </h1>
+      <p>Have questions? Want to learn more about our car price prediction service? Reach out to us using the form
+        below. </p>
+      <p><i class="fa-solid fa-phone"></i> +91 9356545129</p>
+      <p><i class="fa-solid fa-envelope"></i> predictor@gmail.com</p>
+      <p><i class="fa-solid fa-location-dot"></i> Guwahati</p>
+    </div>
+    <div class="contact-form">
+      <h2>Contact Us</h2>
+      <form action="/contact" method="post">
+        <div class="input-element">
+          <label for="name">Full name*</label>
+          <input type="text" name="name" id="name" placeholder="Full Name">
+        </div>
+        <div class="input-element">
+          <label for="email">Email*</label>
+          <input type="email" name="email" id="email" placeholder="Your email id">
+        </div>
+        <div class="input-element">
+          <label for="phone">Phone number</label>
+          <input type="tel" name="phone" id="phone" placeholder="Your phone number">
+        </div>
+        <button type="submit">submit</button>
+        <button type="reset">reset</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <div>Predictor</div>
+    <div>Car Price</div>
+  </footer>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get the form element
+    var contactForm = document.querySelector(".contact-form form");
+
+    // Add submit event listener
+    contactForm.addEventListener("submit", function (event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+
+      // Your submit logic goes here
+      console.log("Form submitted!");
+
+      // You may want to perform AJAX submission or other actions here
+    });
+
+    // Add reset event listener
+    contactForm.addEventListener("reset", function () {
+      // Your reset logic goes here
+      console.log("Form reset!");
+
+      // You may want to clear any additional fields or perform other actions here
+    });
+  });
+
+
+  function openModal() {
+    document.getElementById("myModal").style.display = "block";
+    document.getElementById("overlay").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+    document.getElementById("overlay").style.display = "none";
+  }
+
+  async function predictCarPrice() {
+    const loader = document.getElementsByTagName("loader")[0];
+    loader.classList.remove("hide");
+
+    const content = document.getElementsByTagName("content")[0];
+    content.classList.add("invisible");
+    // Get the input values
+    const name = document.getElementById('name').value;
+    const year = document.getElementById('year').value;
+    const kilometers = document.getElementById('kilometers').value;
+    const fuelType = document.getElementById('fuelType').value;
+    const transmission = document.getElementById('transmission').value;
+    const ownerType = document.getElementById('ownerType').value;
+    const mileage = document.getElementById('mileage').value;
+    const engineSize = document.getElementById('engineSize').value;
+    const horsepower = document.getElementById('horsepower').value;
+    const seats = document.getElementById('seats').value;
+    const age = document.getElementById('age').value;
+
+    // Make an asynchronous call to the backend ML model
+    try {
+      const response = await fetch('/predict', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          year,
+          kilometers,
+          fuelType,
+          transmission,
+          ownerType,
+          mileage,
+          engineSize,
+          horsepower,
+          seats,
+          age,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      // Update the price input with the predicted price
+      const priceInput = document.getElementById('price');
+      priceInput.value = result.predicted_price.toFixed(2)+" lakhs";
+    } catch (error) {
+      console.error('Error predicting car price:', error);
+    }
+    setTimeout(() => {
+      loader.classList.add("hide");
+    content.classList.remove("invisible");  
+    }, 1000);
+    
+  }
+</script>
+
+</html>
